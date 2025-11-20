@@ -1,0 +1,23 @@
+{# filepath: c:\Users\Clem\Documents\github\Layers\templates\admin\categories\form.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{% if isEdit %}Éditer{% else %}Créer{% endif %} une catégorie{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>{% if isEdit %}✏️ Éditer{% else %}➕ Créer{% endif %} une catégorie</h1>
+
+    {{ form_start(form) }}
+        <div class="form-group mb-3">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.name) }}
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">✅ Enregistrer</button>
+            <a href="{{ path('app_admin_categories_index') }}" class="btn btn-secondary">Annuler</a>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{# filepath: c:\Users\Clem\Documents\github\Layers\templates\admin\orders\show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la commande #{{ order.id }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>📋 Commande #{{ order.id }}</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Informations de la commande</h3>
+            <p><strong>Client :</strong> {{ order.user.email }}</p>
+            <p><strong>Nom :</strong> {{ order.user.firstName }} {{ order.user.lastName }}</p>
+            <p><strong>Date :</strong> {{ order.createdAt|date('d/m/Y H:i') }}</p>
+        </div>
+
+        <div class="col-md-6">
+            <h3>Adresse de livraison</h3>
+            {% if order.user.address %}
+                <p>{{ order.user.address.street }}<br>
+                {{ order.user.address.postalCode }} {{ order.user.address.city }}<br>
+                {{ order.user.address.country }}</p>
+            {% else %}
+                <p class="text-muted">Aucune adresse associée.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <h3 class="mt-5">Articles de la commande</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.orderItems %}
+                    <tr>
+                        <td><strong>{{ item.product.name }}</strong></td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.product.price }} €</td>
+                        <td>{{ (item.quantity * item.product.price)|number_format(2, ',', ' ') }} €</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-end mt-3">
+        {# Calculate total by summing quantity * unit price to avoid complex map/reduce syntax issues #}
+        {% set total = 0 %}
+        {% for item in order.orderItems %}
+            {% set total = total + (item.quantity * item.product.price) %}
+        {% endfor %}
+        <h4>Total : {{ total|number_format(2, ',', ' ') }} €</h4>
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ path('app_admin_orders_index') }}" class="btn btn-secondary">← Retour aux commandes</a>
+    </div>
+</div>
+{% endblock %}

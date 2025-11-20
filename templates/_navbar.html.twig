@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand fw-bold" href="{{ path('app_home') }}">
+            🧢 Streetwear<span class="text-warning">Shop</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_home' %}active{% endif %}" href="{{ path('app_home') }}">
+                        Accueil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_products' %}active{% endif %}" href="{{ path('app_products') }}">
+                        Produits
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ms-auto align-items-center">
+                {% if app.user %}
+                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                        <li class="nav-item me-3">
+                            <a class="nav-link text-warning" href="{{ path('app_admin_dashboard') }}">
+                                ⚙️ Admin
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <li class="nav-item me-3">
+                        <span class="text-light small">
+                            👋 Bonjour, <strong>{{ app.user.firstName ?? app.user.email }}</strong>
+                        </span>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link position-relative" href="{{ path('app_cart') }}">
+                            🛒 Panier
+                            {% if app.session.get('cart') is defined and app.session.get('cart')|length > 0 %}
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ app.session.get('cart')|length }}
+                                    <span class="visually-hidden">articles dans le panier</span>
+                                </span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm" href="{{ path('app_profile') }}">
+                            Profil
+                        </a>
+                    </li>
+
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-danger btn-sm" href="{{ path('app_logout') }}">
+                            Déconnexion
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm" href="{{ path('app_login') }}">
+                            🔑 Se connecter
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
