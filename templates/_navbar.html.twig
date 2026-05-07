@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container-fluid px-4">
         <a class="navbar-brand fw-bold" href="{{ path('app_home') }}">
-            🧢 Streetwear<span class="text-warning">Shop</span>
+            {{ 'brand'|trans|raw }}
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -13,12 +13,12 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_home' %}active{% endif %}" href="{{ path('app_home') }}">
-                        Accueil
+                        {{ 'nav.home'|trans }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_products' %}active{% endif %}" href="{{ path('app_products') }}">
-                        Produits
+                        {{ 'nav.products'|trans }}
                     </a>
                 </li>
             </ul>
@@ -28,45 +28,52 @@
                     {% if 'ROLE_ADMIN' in app.user.roles %}
                         <li class="nav-item me-3">
                             <a class="nav-link text-warning" href="{{ path('app_admin_dashboard') }}">
-                                ⚙️ Admin
+                                {{ 'nav.admin'|trans }}
                             </a>
                         </li>
                     {% endif %}
 
                     <li class="nav-item me-3">
                         <span class="text-light small">
-                            👋 Bonjour, <strong>{{ app.user.firstName ?? app.user.email }}</strong>
+                            {{ 'nav.hello'|trans({'%name%': (app.user.firstName ?? app.user.email)}) }}
                         </span>
                     </li>
                     <li class="nav-item me-3">
                         <a class="nav-link position-relative" href="{{ path('app_cart') }}">
-                            🛒 Panier
+                            {{ 'nav.cart'|trans }}
                             {% if app.session.get('cart') is defined and app.session.get('cart')|length > 0 %}
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     {{ app.session.get('cart')|length }}
-                                    <span class="visually-hidden">articles dans le panier</span>
+                                    <span class="visually-hidden">{{ 'nav.cart_visually_hidden'|trans }}</span>
                                 </span>
                             {% endif %}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-outline-light btn-sm" href="{{ path('app_profile') }}">
-                            Profil
+                            {{ 'nav.profile'|trans }}
                         </a>
                     </li>
 
                     <li class="nav-item ms-2">
                         <a class="btn btn-danger btn-sm" href="{{ path('app_logout') }}">
-                            Déconnexion
+                            {{ 'nav.logout'|trans }}
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="btn btn-outline-light btn-sm" href="{{ path('app_login') }}">
-                            🔑 Se connecter
+                            {{ 'nav.login'|trans }}
                         </a>
                     </li>
                 {% endif %}
+                <li class="nav-item ms-2">
+                    {% set current_locale = app.request.locale %}
+                    <div class="btn-group" role="group" aria-label="Locale switch">
+                        <a class="btn btn-sm btn-outline-light {% if current_locale == 'fr' %}active{% endif %}" href="{{ path('locale_switch', {'locale': 'fr'}) }}">FR</a>
+                        <a class="btn btn-sm btn-outline-light {% if current_locale == 'en' %}active{% endif %}" href="{{ path('locale_switch', {'locale': 'en'}) }}">EN</a>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

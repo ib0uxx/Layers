@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produits{% endblock %}
+{% block title %}{{ 'products.title'|trans }}{% endblock %}
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="text-center mb-4">🧢 Nos produits streetwear</h1>
+    <h1 class="text-center mb-4">{{ 'products.heading'|trans|raw }}</h1>
 
     <div class="row">
         {% for product in products %}
@@ -15,24 +15,24 @@
         {% if firstImage %}
             <img src="{{ firstImage.url }}" class="card-img-top" alt="{{ product.name }}">
         {% else %}
-            <img src="https://via.placeholder.com/400x300?text=No+Image" class="card-img-top" alt="Pas d'image">
+            <img src="https://via.placeholder.com/400x300?text=No+Image" class="card-img-top" alt="{{ 'product.no_image_alt'|trans }}">
         {% endif %}
         <div class="card-body text-center">
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text text-muted">{{ product.description }}</p>
             <p class="fw-bold">{{ product.price }} €</p>
             {% if product.stock > 0 %}
-                <span class="badge bg-success">En stock</span>
+                <span class="badge bg-success">{{ 'product.in_stock'|trans }}</span>
             {% else %}
-                <span class="badge bg-danger">Rupture</span>
+                <span class="badge bg-danger">{{ 'product.out_of_stock'|trans }}</span>
             {% endif %}
         </div>
     </div>
 </a>
 
             </div>
-        {% else %}
-            <p class="text-center">Aucun produit trouvé.</p>
+            {% else %}
+            <p class="text-center">{{ 'products.none'|trans }}</p>
         {% endfor %}
     </div>
 </div>

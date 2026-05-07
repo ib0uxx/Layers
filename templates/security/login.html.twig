@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}{{ 'login.title'|trans }}{% endblock %}
 
 {% block body %}
 <div class="container mt-5" style="max-width: 400px;">
-    <h1 class="mb-4 text-center">Se connecter</h1>
+    <h1 class="mb-4 text-center">{{ 'login.heading'|trans }}</h1>
 
     {% if error %}
         <div class="alert alert-danger">
@@ -14,19 +14,19 @@
 
     <form method="post">
         <div class="mb-3">
-            <label for="inputEmail" class="form-label">Email</label>
+            <label for="inputEmail" class="form-label">{{ 'login.email'|trans }}</label>
             <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
         </div>
 
         <div class="mb-3">
-            <label for="inputPassword" class="form-label">Mot de passe</label>
+            <label for="inputPassword" class="form-label">{{ 'login.password'|trans }}</label>
             <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
         </div>
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <button class="btn btn-dark w-100" type="submit">
-            Se connecter
+            {{ 'login.submit'|trans }}
         </button>
     </form>
 </div>

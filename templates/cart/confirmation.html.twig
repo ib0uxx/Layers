@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande confirmée{% endblock %}
+{% block title %}{{ 'confirmation.title'|trans }}{% endblock %}
 
 {% block body %}
 <div class="container mt-5 text-center">
 
-    <h1>🎉 Merci pour votre commande, {{ fullname }} !</h1>
+    <h1>🎉 {{ 'confirmation.thanks'|trans({'%name%': fullname}) }}</h1>
 
-    <p class="mt-4">Votre paiement par <strong>{{ payment }}</strong> a été accepté.</p>
+    <p class="mt-4">{{ 'confirmation.paid_by'|trans({'%payment%': payment}) }}</p>
 
-    <h3 class="mt-4">Montant total : <strong>{{ total }} €</strong></h3>
+    <h3 class="mt-4">{{ 'confirmation.total_amount'|trans }} <strong>{{ total }} €</strong></h3>
 
     <a href="{{ path('app_home') }}" class="btn btn-primary mt-4">
-        Retour à l'accueil
+        {{ 'confirmation.back_home'|trans }}
     </a>
 
 </div>
